@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI_Select_Character : UI_Popup
 {
+    enum Objects
+    {
+        CharacterPanel,
+    }
     enum Buttons
     {
         StartButton,
@@ -25,14 +31,17 @@ public class UI_Select_Character : UI_Popup
     void SetInfo()
     {
         BindButton(typeof(Buttons));
+        Bind<CharacterPanel>(typeof(Objects));
         
         GetButton((int)Buttons.StartButton).gameObject.BindEvent(OnStartButton);
         GetButton((int)Buttons.BackButton).gameObject.BindEvent(OnBackButton);
+
+        Get<CharacterPanel>((int)Objects.CharacterPanel).GetOrAddComponent<CharacterPanel>();
     }
 
     void OnStartButton()
     {
-        Debug.Log("StartButton");
+        SceneManager.LoadScene("GameScene");
     }
     
     void OnBackButton()

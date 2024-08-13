@@ -8,12 +8,12 @@ public class UI_State_Upgrade : UI_Popup
     {
         BackButton,
     }
+
+    private GameObject _panel;
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
-
-        Debug.Log("UI_State_Upgrade");
         
         SetInfo();
         
@@ -23,7 +23,7 @@ public class UI_State_Upgrade : UI_Popup
     void SetInfo()
     {
         BindButton(typeof(Buttons));
-        //
+        
         // GetButton((int)Buttons.StartButton).gameObject.BindEvent(OnStartButton);
         GetButton((int)Buttons.BackButton).gameObject.BindEvent(OnBackButton);
     }

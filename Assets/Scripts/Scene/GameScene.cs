@@ -8,9 +8,12 @@ public class GameScene : BaseScene
     {
         if (base.Init() == false)
             return false;
+        
         SceneType = Define.Scene.Game;
         
-        Managers.UI.ShowPopupUI<UI_TitlePopup>();
+        Debug.Log($"{ Managers.Game.SelectId}");
+        Debug.Log($"atk { Managers.Game.SaveData.CharacterUpgrade.atk}");
+       
         return true;
     }
 }

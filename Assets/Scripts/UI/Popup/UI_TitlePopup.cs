@@ -15,9 +15,8 @@ public class UI_TitlePopup : UI_Popup
         if (base.Init() == false)
             return false;
 
-        Debug.Log("UI_TitlePopup");
-
         SetInfo();
+        LoadDataCheack();
         
         return true;
     }
@@ -29,6 +28,7 @@ public class UI_TitlePopup : UI_Popup
         GetButton((int)Buttons.StartButton).gameObject.BindEvent(OnStartButton);
         GetButton((int)Buttons.StateButton).gameObject.BindEvent(OnItemButton);
         GetButton((int)Buttons.GachaButton).gameObject.BindEvent(OnGachaButton);
+
     }
 
     void OnStartButton()
@@ -46,5 +46,24 @@ public class UI_TitlePopup : UI_Popup
     void OnGachaButton()
     {
         Debug.Log("GachaButton click!");
+    }
+
+    void LoadDataCheack()
+    {
+        if (!Managers.Game.LoadGame())
+        {
+            Managers.Game.SaveData.Characters = 
+                Managers.Data.DictionaryToList(Managers.Data.CharacterDic);
+        
+            Managers.Game.SaveData.CharacterUpgrade = 
+                Managers.Data.UpgradeData;
+            
+            Managers.Game.SaveGame();
+        }
+        else
+        {
+            Managers.Game.LoadGame();
+        }
+        
     }
 }

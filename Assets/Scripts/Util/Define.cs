@@ -61,6 +61,12 @@ public class Define
         Hit,
         Attack,
     }
-    
-    // public enum 
+
+    public enum UserUpgradeStat
+    {
+        HPPanel,
+        SpdPanel,
+        AtkPanel,
+        AtkSpdPanel,
+    } 
 }
