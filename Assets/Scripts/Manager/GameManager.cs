@@ -9,13 +9,17 @@ public class GameManager
     // 플레이어 사망 확인
     private bool _isLive = true;
     private int _selectId;
-    private GameObject _player;
+    
+    private VirtualCamera _camera;
+    private PlayerController _player;
+    // private GameObject _player;
 
     private GameData _gameData = new GameData();
     
     public Action<int> OnSpawnEvent;
     public GameData SaveData { get {return _gameData;} set { _gameData = value; } }
-    public GameObject GetPlayer{ get {return _player;} set { _player = value; } }
+    public VirtualCamera Camera{ get {return _camera;} set { _camera = value; } }
+    public PlayerController GetPlayer{ get {return _player;} set { _player = value; } }
     public bool IsLive { get { return _isLive;} set { _isLive = value; } }
     public int SelectId { get { return _selectId;}
         set
@@ -26,7 +30,6 @@ public class GameManager
     }
 
     public delegate void SelectIdSocket(int id);
-
     public static event SelectIdSocket SelectIdEvent;
     
     public void Init()

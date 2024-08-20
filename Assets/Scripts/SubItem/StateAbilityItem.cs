@@ -11,6 +11,10 @@ public class StateAbilityItem : UI_Base
         Box,
     }
 
+    enum Images
+    {
+        Icon,
+    }
     enum SliderInfo
     {
         SliderBar,
@@ -39,6 +43,7 @@ public class StateAbilityItem : UI_Base
             return false;
         
         BindButton(typeof(Buttons));
+        BindImage(typeof(Images));
         Bind<SliderBar>(typeof(SliderInfo));
         BindText(typeof(Texts));
         
@@ -93,22 +98,30 @@ public class StateAbilityItem : UI_Base
 
     void StatSetting()
     {
+        Sprite sprties = null;
+        
         switch (_userUpgradeStat)
         {
             case Define.UserUpgradeStat.HPPanel:
                 Value = Managers.Game.SaveData.CharacterUpgrade.hp;
+                sprties = Resources.Load<Sprite>("Sprites/Icon_HP");
                 break;
             case Define.UserUpgradeStat.SpdPanel:
                 Value = Managers.Game.SaveData.CharacterUpgrade.spd;
+                sprties = Resources.Load<Sprite>("Sprites/Icon_Spd");
                 break;
             case Define.UserUpgradeStat.AtkPanel:
                 Value = Managers.Game.SaveData.CharacterUpgrade.atk;
+                sprties = Resources.Load<Sprite>("Sprites/Icon_Atk");
                 break;
             case Define.UserUpgradeStat.AtkSpdPanel:
                 Value = Managers.Game.SaveData.CharacterUpgrade.atkSpd;
+                sprties = Resources.Load<Sprite>("Sprites/Icon_AtkSpd");
                 break;
         }
 
+        GetImage((int)Images.Icon).sprite = sprties;
         _text.text = Value.ToString();
     }
+    
 }

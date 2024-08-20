@@ -11,8 +11,8 @@ public class GameScene : BaseScene
         
         SceneType = Define.Scene.Game;
         
-        Debug.Log($"{ Managers.Game.SelectId}");
-        Debug.Log($"atk { Managers.Game.SaveData.CharacterUpgrade.atk}");
+        // Debug.Log($"{ Managers.Game.SelectId}");
+        // Debug.Log($"atk { Managers.Game.SaveData.CharacterUpgrade.atk}");
        
         return true;
     }

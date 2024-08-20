@@ -37,11 +37,14 @@ public class UI_Select_Character : UI_Popup
         GetButton((int)Buttons.BackButton).gameObject.BindEvent(OnBackButton);
 
         Get<CharacterPanel>((int)Objects.CharacterPanel).GetOrAddComponent<CharacterPanel>();
+
+        Managers.Game.SelectId = -1;
     }
 
     void OnStartButton()
     {
-        SceneManager.LoadScene("GameScene");
+        if(Managers.Game.SelectId != -1)
+            SceneManager.LoadScene("GameScene");
     }
     
     void OnBackButton()

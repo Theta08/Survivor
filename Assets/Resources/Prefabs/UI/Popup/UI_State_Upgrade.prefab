@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2544878221622231056}
   - component: {fileID: 2418477675285421967}
   m_Layer: 5
-  m_Name: AtkSpdImage
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,7 +877,7 @@ GameObject:
   - component: {fileID: 2990905757509885912}
   - component: {fileID: 2990905757509885919}
   m_Layer: 5
-  m_Name: HpImage
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1765,6 +1765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 0
   _MaxValue: 0
+  _userUpgradeStat: 0
 --- !u!1 &5477688926534345261
 GameObject:
   m_ObjectHideFlags: 0
@@ -2147,7 +2148,7 @@ GameObject:
   - component: {fileID: 860999467190112501}
   - component: {fileID: 6255469120946122337}
   m_Layer: 5
-  m_Name: SpdImage
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2410,6 +2411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 0
   _MaxValue: 0
+  _userUpgradeStat: 0
 --- !u!1 &7379492592389418377
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,6 +2581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 0
   _MaxValue: 0
+  _userUpgradeStat: 0
 --- !u!1 &7602866472917565740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2802,7 +2805,7 @@ GameObject:
   - component: {fileID: 8325730139344706283}
   - component: {fileID: 6509519609157286929}
   m_Layer: 5
-  m_Name: AtkImage
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2959,6 +2962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 0
   _MaxValue: 0
+  _userUpgradeStat: 0
 --- !u!1 &8242109952252002379
 GameObject:
   m_ObjectHideFlags: 0

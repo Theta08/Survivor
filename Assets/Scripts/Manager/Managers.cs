@@ -44,6 +44,7 @@ public class Managers : MonoBehaviour
             s_instance._data.Init();
             s_instance._pool.Init();
             s_instance._resource.Init();
+            _gameManager.Init();
         }
     }
     void Update()

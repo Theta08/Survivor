@@ -30,7 +30,7 @@ public class SliderBar : UI_Base
         SetHpRatio(ratio);
     }
 
-    void Init(){ }
+    // void Init(){ }
     
     public void SetHpRatio(float ratio)
     {
