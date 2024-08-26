@@ -4,29 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
-    private Stat _stat;
-    private Rigidbody2D _rigidbody;
-    private SpriteRenderer _sprite;
-    private Animator _animator;
     [SerializeField]
     private Vector2 _inputVec;
     
     public Vector2 InputVec { get { return _inputVec; } set { _inputVec = value; } }
     
-    // Start is called before the first frame update
     void Start()
     {
         Init();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     private void FixedUpdate()
     {
         Vector2 nextVec = InputVec * _stat.Spd * Time.fixedDeltaTime;
@@ -41,20 +30,24 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void Init()
+    public override bool Init()
     {
+        if (base.Init() == false)
+            return false;
+        
         // Init 적용 후 Stat.Init 적용
         _rigidbody = GetComponent<Rigidbody2D>();
         _sprite = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        
         _stat = gameObject.GetOrAddComponent<Stat>();
-
-        Managers.Game.Camera.VirtualCameraSetting(gameObject.transform);
+        
+        ObjectType = Define.ObjectType.Player;
         Managers.Game.GetPlayer = this;
+        // Managers.Game.Camera.VirtualCameraSetting(gameObject.transform);
         
         Debug.Log($"atk {_stat.Atk}");
-        Debug.Log($"hp {_stat.Hp}");
+
+        return true;
     }
 
     void OnMove(InputValue value)

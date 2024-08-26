@@ -126,6 +126,8 @@ public class PoolManager
          return;
       }
       
+      poolable.gameObject.transform.position = Vector3.zero;
+      
       _pool[name].Push(poolable);
    }
    
@@ -137,13 +139,6 @@ public class PoolManager
       return _pool[original.name].Pop(parent);
    }
    
-   public Poolable Pop(GameObject original, Vector3 pos, Quaternion rot, Transform parent = null)
-   {
-      if (_pool.ContainsKey(original.name) == false)
-         CreatePool(original);
-
-      return _pool[original.name].Pop(pos, rot, parent);
-   }
 
    public GameObject GetOriginal(string name)
    {

@@ -40,8 +40,8 @@ public class ResourceManager
 
     public GameObject Instantiate(GameObject prefab, Transform parent = null)
     {
-        // if (prefab.GetComponent<Poolable>() != null)
-        //     return Managers.Pool.Pop(prefab, parent).gameObject;
+        if (prefab.GetComponent<Poolable>() != null)
+            return Managers.Pool.Pop(prefab, parent).gameObject;
         
         GameObject go = Object.Instantiate(prefab, parent);
         go.name = prefab.name;

@@ -11,11 +11,13 @@ public class DataManager
 {
    public Dictionary<int, Character> CharacterDic { get; set; } = new Dictionary<int, Character>();
    public Dictionary<int, CharacterStat> CharacterStatsDic { get; set; } = new Dictionary<int, CharacterStat>();
+   public Dictionary<int, MonsterData> MonsterStatsDic { get; set; } = new Dictionary<int, MonsterData>();
    public UpgradeData UpgradeData { get; set; } = new UpgradeData();
 
    public void Init()
    {
       CharacterDic = LoadJson<CharactersDataLoad, int, Character>("Characters").MakeDict();
+      MonsterStatsDic = LoadJson<MonsterDataLoad, int, MonsterData>("Monsters").MakeDict();
       CharacterStatsDic = LoadJson<CharacterData, int, CharacterStat>("Stat").MakeDict();
       UpgradeData = LoadJson<UpgradeData>("UpgradeStat");
    }

@@ -6,6 +6,8 @@ public class Stat : MonoBehaviour
 {
     private int id;
     [SerializeField]
+    private int _maxHp;
+    [SerializeField]
     private int _hp;
     [SerializeField]
     private int _atk;
@@ -15,7 +17,21 @@ public class Stat : MonoBehaviour
     private float _spd;
     
     public int Id { get; set; }
-    public int Hp { get { return _hp;} set { _hp = value; } }
+    public int MaxHp { get { return _maxHp;} set { _maxHp = value; } }
+    public int Hp { 
+        get { return _hp;}
+        set
+        {
+            _hp = value;
+
+            if (_hp > 0)
+            {
+                // Live
+                gameObject.GetComponent<BaseController>().Animator.SetTrigger("Hit");
+            }
+      
+        } 
+    }
     public int Atk { get { return _atk;} set { _atk = value; } }
     
     public float AtkSpd { get { return _atkSpd;} set { _atkSpd = value; } }
@@ -25,21 +41,18 @@ public class Stat : MonoBehaviour
     {
         Init();
     }
-
-    void Update()
-    {
-        
-    }
-
+    
     void Init()
     {
         CharacterStat characterStat = Managers.Data.CharacterStatsDic[Managers.Game.SelectId];
         UpgradeData upgradeData = Managers.Data.UpgradeData;
         
         Hp = characterStat.hp + upgradeData.hp;
+        MaxHp = Hp;
         Spd = characterStat.spd + upgradeData.spd;
         Atk = characterStat.atk + upgradeData.atk;
         AtkSpd = characterStat.atkSpd + upgradeData.atkSpd;
 
     }
+    
 }
