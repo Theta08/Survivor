@@ -1,21 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-
+using UnityEngine.UI;
+/**
+ * 무기 업그레이드 
+ */
 public class UI_AbilityItem : UI_Base
 {
     enum Texts
     {
-        Text_Title,
-        Text_Level,
+        LvText,
+        NameText,
+        DescText
+    }
+
+    enum Buttons
+    {
+        Button,
     }
 
     enum Images
     {
         Image,
     }
-
-    private int _type;
+    
+    private Item _item;
+    private Sprite _sprite;
+    private WeaponController _weapon;
+    private GearController _gearController;
     
     public override bool Init()
     {
@@ -23,38 +36,111 @@ public class UI_AbilityItem : UI_Base
             return false;
 
         BindText(typeof(Texts));
+        BindButton(typeof(Buttons));
         BindImage(typeof(Images));
         
-        RefreshUI();
+        // RefreshUI();
         
-        gameObject.BindEvent(OnButtonEvent);
+        
+        GetButton((int)Buttons.Button).gameObject.BindEvent(OnButtonEvent);
+        // gameObject.BindEvent(OnButtonEvent);
         return true;
     }
     
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     void OnButtonEvent()
     {
-        Debug.Log($"{gameObject.name} button click!");
-        Managers.Game.Resume();
+        if (!GetButton((int)Buttons.Button).interactable)
+            return;
+        // 아이템 획득시 업그래드 및 생성
+        switch (_item.type)
+        {
+            case "weapon":
+                if (_item.level == 0)
+                {
+                    GameObject newWeapon = new GameObject {name = $"Weapon_{_item.id}l"};
         
-        Managers.Resource.Destroy(transform.parent.gameObject.transform.parent.parent.gameObject);
+                    _weapon = newWeapon.AddComponent<WeaponController>();
+                    _weapon.Init(_item);
+                    _item.WeaponController = _weapon;
+                }
+                else
+                {
+                    float nextDamage = _item.damage;
+                    int nextCount = 0;
+
+                    nextDamage += _item.damage * _item.damages[_item.level];
+                    nextCount += _item.counts[_item.level];
+
+                    _weapon = _item.WeaponController;
+                    _weapon.LevelUp(nextDamage, nextCount);
+                }
+                break;
+            case "gun":
+                break;
+            case "glove":
+            case "shoe":
+                if (_item.level == 0)
+                {
+                    GameObject newGear = new GameObject {name = $"Ggear_{_item.id}l"};
+                    _gearController = newGear.AddComponent<GearController>();
+                    _gearController.Init(_item);
+                    
+                    _item.GearController = _gearController;
+                }
+                else
+                {
+                    float nextRate = _item.damages[_item.level];
+                    _gearController = _item.GearController;
+                    _gearController.LevelUp(nextRate);
+                }
+                break;
+            case "heal":
+                Managers.Game.GetPlayer.Stat.Hp = Managers.Game.GetPlayer.Stat.MaxHp;
+                break;
+        }
+        
+        if(_item.type != "heal")
+            _item.level++;
+        
+        if (_item.level >= _item.damages.Length)
+        {
+            GetButton((int)Buttons.Button).interactable = false;
+            _item.maxLevel = true;
+            _item.level = _item.damages.Length;
+        }
+        RefreshUI();   
+        
+        //  주석 풀어야함
+        Managers.Game.Resume();
+        Managers.Resource.Destroy(transform.parent.parent.gameObject);
     }
 
-    public void SetInfo(int type)
+    public void SetInfo(Item item)
     {
-        _type = type;
-        
+        _item = item;
+        Init();
+        RefreshUI();
     }
 
     void RefreshUI()
     {
-        GetText((int)Texts.Text_Title).text = $"{_type} Title";
-        GetText((int)Texts.Text_Level).text = $"{_type} Level";
+        if (_item.itemType != Item.ItemType.Heal)
+            GetText((int)Texts.LvText).text =$"Lv. {_item.level}";    
+        else
+            GetText((int)Texts.LvText).text =$"";
+        
+        GetText((int)Texts.NameText).text = $"{_item.name}";
+        GetText((int)Texts.DescText).text = $"{_item.damages[_item.level]}% 증가";
+        // GetText((int)Texts.DescText).text = string.Format($"{_item.level: D2}");
+        OnImgSeting();
+    }
+
+    void OnImgSeting()
+    {
+        string name = _item.icon;
+        Sprite icon = Utils.FindSprite("UI", name);
+        
+        GetImage((int)Images.Image).sprite = icon;
     }
 }

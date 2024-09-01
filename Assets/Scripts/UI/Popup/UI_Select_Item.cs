@@ -10,11 +10,6 @@ public class UI_Select_Item : UI_Popup
         UI_Abilibty_item_2,
         UI_Abilibty_item_3,
     }
-
-    enum Buttons
-    {
-        ButtonTest,
-    }
     
     public override bool Init()
     {
@@ -24,14 +19,47 @@ public class UI_Select_Item : UI_Popup
         Bind<UI_AbilityItem>(typeof(AbilityItems));
         // BindButton(typeof(Buttons));
         
+        // 주석 풀어야함
         Managers.Game.Stop();
+        // 랜덤선택
+        // 기본 평타는x
+        int[] ran = new int[3];
+        int count = Managers.Data.ItemDatasDic.Count;
+        
+        while (true)
+        {
+            ran[0] = Random.Range(0, count);
+            ran[1] = Random.Range(0, count);
+            ran[2] = Random.Range(0, count);
+            
+            if(ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2])
+                break;
+        }
 
-        Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_1).SetInfo(0);
-        Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_2).SetInfo(1);
-        Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_3).SetInfo(2);
-        // Get<UI_AbilityItem>((int)AbilityItems.UI_AbilityItem_MaxHp).SetInfo(Define.StatType.MaxHp);
+        for (int i = 0; i < ran.Length; i++)
+        {
+            Item ranItem = Managers.Data.ItemDatasDic[ran[i]];
 
-        // GetButton((int)Buttons.ButtonTest).gameObject.BindEvent(Test);
+            Get<UI_AbilityItem>(i).gameObject.SetActive(true);
+            
+            if (ranItem.maxLevel && i == ran.Length - 1)
+            {
+                ranItem = Managers.Data.ItemDatasDic[ran[5]];
+                Get<UI_AbilityItem>(i).SetInfo(ranItem);
+            }
+            else if (ranItem.maxLevel && i != ran.Length - 1)
+                Get<UI_AbilityItem>(i).gameObject.SetActive(false);
+            else
+                Get<UI_AbilityItem>(i).SetInfo(ranItem);
+        }
+        
+        // enum 안쓰고 함
+        // Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_1)
+        //     .SetInfo(Managers.Data.ItemDatasDic[ran[0]]);
+        // Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_2)
+        //     .SetInfo(Managers.Data.ItemDatasDic[ran[1]]);
+        // Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_3)
+        //     .SetInfo(Managers.Data.ItemDatasDic[ran[2]]);
         
         return true;
     }

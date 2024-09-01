@@ -18,7 +18,9 @@ public class SliderBar : UI_Base
     
     public float Value { get { return _value; } set { _value = value; } }
     public float MaxValue { get { return _maxValue; } set { _maxValue = value; } }
-    
+
+    private Slider _slider;
+    private TextMeshProUGUI _text;
     void Start()
     {
         // Init();

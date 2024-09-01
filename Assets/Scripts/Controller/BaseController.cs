@@ -18,7 +18,7 @@ public class BaseController : MonoBehaviour
     public Define.ObjectType ObjectType { get; protected set; } = Define.ObjectType.Unknown;
     public Animator Animator { get { return _animator;} set { _animator = value; } }
     // public bool IsLive { get { return isLive;} set { isLive = value; } }
-
+    public Stat Stat { get { return _stat; } set { _stat = value; } }
     private void Awake()
     {
         Init();

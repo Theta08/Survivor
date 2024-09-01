@@ -5,6 +5,20 @@ using UnityEngine;
 
 public class MonsterStat : Stat
 {
+    public override float Hp { 
+        get { return _hp;}
+        set
+        {
+            _hp = value;
+
+            if (_hp > 0)
+            {
+                // Live
+                gameObject.GetComponent<BaseController>().Animator.SetTrigger("Hit");
+            }
+      
+        } 
+    }
     private void Start()
     {
         Init();

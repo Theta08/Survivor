@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIManager
 {
-   private int _order = -20;
+   private int _order = 0;
    UI_Scene _sceneUI = null;
    
    private Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();

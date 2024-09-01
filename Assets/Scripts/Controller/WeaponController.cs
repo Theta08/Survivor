@@ -6,34 +6,38 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public int id;
-    public int prefabId;
     public float _damage;
     public float speed;
     public int _count;
+    
+    private Item _item;
+    
+    private float _timer;
+    // void Start()
+    // {
+    //     Item item = new Item();
+    //     Init(item);
+    // }
 
-    private float timer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Init();
-    }
-
-    // Update is called once per frame
     void Update()
     {
         switch (id)
         {
-            case 0:
-                transform.Rotate(Vector3.back * speed * Time.deltaTime);
-                break;
-            default:
-                timer += Time.deltaTime;
+            case -1:
+                _timer += Time.deltaTime;
 
-                if (timer > speed)
+                if (_timer > speed)
                 {
-                    timer = 0;
+                    _timer = 0;
                     Fire();
                 }
+                break;
+            case 0:
+                transform.Rotate(Vector3.forward * speed * Time.deltaTime);
+                break;
+            case 4:
+                break;
+            default:
                 break;
         }
         // test
@@ -48,45 +52,74 @@ public class WeaponController : MonoBehaviour
         
         if( id == 0)
             Bacth();
+      
+        Managers.Game.GetPlayer.
+            BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
-    public void Init()
+    public void Init(Item item)
     {
+        
+        gameObject.name = "Weapon_" + item.id; // data.itemId;
+        transform.parent = Managers.Game.GetPlayer.transform;
+        transform.localPosition = Vector3.zero;
+        
+        _item = item;
+        id = item.id;
+        _damage = item.damage;
+        _count = item.count;
+        
+        
         switch (id)
         {
             case 0:
                 speed = 150;
                 Bacth();
                 break;
+            // case 1:
+            //     speed = 150;
+            //     Bacth();
+            //     break;
             default:
-                speed = 0.5f;
+                speed = 1.0f;
                 break;
         }
+        // Hand Set
+        Hand hand = Managers.Game.GetPlayer.Hands[(int)item.itemType];
+        // item.handSprite = Utils.FindSprite("Props", item.hand);
+        hand.gameObject.SetActive(true);
+        hand._sprite.sprite = item.handSprite;
+        
+        // 특정함수를 자식들에게 방송
+        Managers.Game.GetPlayer.
+            BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     private void Bacth()
     {
+        
         for (int i = 0; i < _count; i++)
         {
-            Transform go;
+            Transform bullet;
             if (i < transform.childCount)
-                go = transform.GetChild(i);
-            
+                bullet = transform.GetChild(i);
             else
             {
-                go = Managers.Resource.Instantiate("Weapon/Bullet 3").transform;
-                go.parent = transform;
+                
+                bullet = Managers.Resource.Instantiate($"Weapon/{_item.hand}").transform;
+                bullet.parent = transform;
                 // Managers.Game.Spawn(Define.ObjectType.Unknown, go);
             }
             
             // 초기화
-            go.localPosition = Vector3.zero;
-            go.transform.localRotation = Quaternion.identity;
+            bullet.localPosition = Vector3.zero;
+            bullet.transform.localRotation = Quaternion.identity;
             
             Vector3 rotVec = Vector3.forward * 360 * i / _count;
             
-            go.Rotate(rotVec);
-            go.Translate(go.transform.up * 1.5f, Space.World);
-            go.GetComponent<Bullet>().Init(_damage, -1, Vector3.zero); // -1 is Infinity Per
+            // rigidbody 사용 했는지 확인 rigidbody사용 했으면 이상함 
+            bullet.Rotate(rotVec);
+            bullet.Translate(bullet.transform.up * 1.2f, Space.World);
+            bullet.GetComponent<Bullet>().Init(_damage, -1, Vector3.zero); // -1 is Infinity Per
         }
     }
     
@@ -104,6 +137,10 @@ public class WeaponController : MonoBehaviour
         // 회전
         go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         
+        _damage = Managers.Game.GetPlayer.Stat.Atk;
+        
         go.GetComponent<Bullet>().Init(_damage, 0, dir); 
+        go.GetComponent<TimerDestory>().Init(1.5f);
     }
+    
 }

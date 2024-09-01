@@ -49,4 +49,24 @@ public class Utils
 
       return null;
    }
+
+   /**
+    * location 위치
+    * sprtieName 찾을 이름
+    */
+   public static Sprite FindSprite(string location, string sprtieName)
+   {
+      Sprite[] sprites = Resources.LoadAll<Sprite>($"Sprites/{location}");
+
+      foreach (Sprite sprite in sprites)
+      {
+         if (sprite.name == sprtieName)
+         {
+            return sprite;
+         }
+      }
+      
+      Debug.Log($"no {location} name {sprtieName}");
+      return null;
+   }
 }

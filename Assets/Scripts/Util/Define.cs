@@ -68,5 +68,14 @@ public class Define
         SpdPanel,
         AtkPanel,
         AtkSpdPanel,
-    } 
+    }
+
+    public enum InfoType
+    {
+        Exp,
+        Level,
+        Kill,
+        Time,
+        Health,
+    }
 }

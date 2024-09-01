@@ -21,7 +21,9 @@ public class GameScene : BaseScene
 
         Spawner spawner = GameObject.Find("Spawner").GetComponent<Spawner>();
         spawner.SetKeepMonsterCount(_spawnMonseter);
-        
+
+        Managers.UI.ShowSceneUI<UI_HUD>();
+        Managers.UI.ShowSceneUI<UI_FollowHpBar>();
         return true;
     }
 

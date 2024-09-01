@@ -10,7 +10,7 @@ public class GameManager
     private bool _isLive = true;
     private int _selectId;
     private float _gameTime;
-    private float _maxGameTime = 2 * 10f;
+    private float _maxGameTime = 2 * 10f * 60;
     
     private PlayerController _player;
     // private GameObject _player;
@@ -40,6 +40,27 @@ public class GameManager
         if (SelectIdEvent != null) SelectIdEvent(SelectId);
     }
 
+    #region Exp
+    public void GetExp()
+    {
+        Managers.Game.SaveData.exp++;
+        Managers.Game.SaveData.kill++;
+        
+        int exp = Managers.Game.SaveData.exp;
+        int level = Managers.Game.SaveData.level;
+        int nextExp = Managers.Game.SaveData.nextExp[level];
+
+        if (exp == nextExp)
+        {
+            Managers.Game.SaveData.level++;
+            Managers.Game.SaveData.exp = 0;
+
+            // 주석 풀어야함
+            Managers.UI.ShowPopupUI<UI_Select_Item>();
+        }
+    }
+    #endregion
+    
     #region Timer Stop or reStart
 
     public void Stop()

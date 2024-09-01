@@ -19,7 +19,7 @@ public class EnemyController : BaseController
             return;
         
         Vector2 dirVec = target.position - _rigidbody.position;
-        Vector2 nextVec = dirVec.normalized * _stat.Spd * Time.fixedDeltaTime;
+        Vector2 nextVec = dirVec.normalized * Stat.Spd * Time.fixedDeltaTime;
         
         _rigidbody.MovePosition(_rigidbody.position + nextVec);
         _rigidbody.velocity = Vector2.zero;
@@ -57,7 +57,7 @@ public class EnemyController : BaseController
 
         _wait = new WaitForFixedUpdate();
         target = Managers.Game.GetPlayer.GetComponent<Rigidbody2D>();
-        _stat = gameObject.GetOrAddComponent<MonsterStat>();
+        Stat = gameObject.GetOrAddComponent<MonsterStat>();
         
         // 빼야함
         animCon[0] = Managers.Resource.Load<RuntimeAnimatorController>("Animations/Enemy/AcEnemy 2");
@@ -68,13 +68,13 @@ public class EnemyController : BaseController
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Bullet"))
+        if (!other.CompareTag("Bullet") || !_isLive)
             return;
 
         StartCoroutine("KnockBack");
-        _stat.Hp -= (int)other.GetComponent<Bullet>().Damage;
+        Stat.Hp -= (int)other.GetComponent<Bullet>().Damage;
 
-        if (_stat.Hp <= 0)
+        if (Stat.Hp <= 0)
         {
             _isLive = false;
             // 비활성화
@@ -82,6 +82,9 @@ public class EnemyController : BaseController
             _rigidbody.simulated = false;
             _sprite.sortingOrder = 1;
             _animator.SetBool("Dead", true);
+
+            Managers.Game.SaveData.kill++;
+            Managers.Game.GetExp();
         }
 
     }

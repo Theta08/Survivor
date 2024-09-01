@@ -12,6 +12,7 @@ public class DataManager
    public Dictionary<int, Character> CharacterDic { get; set; } = new Dictionary<int, Character>();
    public Dictionary<int, CharacterStat> CharacterStatsDic { get; set; } = new Dictionary<int, CharacterStat>();
    public Dictionary<int, MonsterData> MonsterStatsDic { get; set; } = new Dictionary<int, MonsterData>();
+   public Dictionary<int, Item> ItemDatasDic { get; set; } = new Dictionary<int, Item>();
    public UpgradeData UpgradeData { get; set; } = new UpgradeData();
 
    public void Init()
@@ -19,6 +20,7 @@ public class DataManager
       CharacterDic = LoadJson<CharactersDataLoad, int, Character>("Characters").MakeDict();
       MonsterStatsDic = LoadJson<MonsterDataLoad, int, MonsterData>("Monsters").MakeDict();
       CharacterStatsDic = LoadJson<CharacterData, int, CharacterStat>("Stat").MakeDict();
+      ItemDatasDic = LoadJson<ItemsDatasLoad, int, Item>("Items").MakeDict();
       UpgradeData = LoadJson<UpgradeData>("UpgradeStat");
    }
    
