@@ -55,7 +55,8 @@ public class UI_Chacter_Box : UI_Base
         
         // Data에서 값이 있으면 화면 보이게 하기
         // type과 data 인덱스는 동일해야함
-        if (!Managers.Data.CharacterDic[type].isOn || type == -1)
+        // if (!Managers.Data.CharacterDic[type].isOn || type == -1)
+        if (!Managers.Game.SaveData.Characters[type].isOn || type == -1)
             return;
         
         Sprite[] sprites = Resources.LoadAll<Sprite>($"Sprites/Farmer {type}");
@@ -72,9 +73,15 @@ public class UI_Chacter_Box : UI_Base
 
     void OnCharacterClick()
     {
+        if (type == -1)
+            return;
+        
         Managers.Game.SelectId = type;
         
         // Debug.Log($"select Id {Managers.Game.SelectId}");
+        // 특정함수를 자식들에게 방송
+        // gameObject.
+        //     BroadcastMessage("SelectInfo", SendMessageOptions.DontRequireReceiver);
     }
     
 }

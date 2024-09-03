@@ -38,7 +38,7 @@ public class UI_Select_Character : UI_Popup
 
         Get<CharacterPanel>((int)Objects.CharacterPanel).GetOrAddComponent<CharacterPanel>();
 
-        Managers.Game.SelectId = -1;
+        // Managers.Game.SelectId = -1;
     }
 
     void OnStartButton()

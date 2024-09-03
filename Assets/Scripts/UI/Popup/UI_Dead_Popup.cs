@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI_Dead_Popup : UI_Popup
 {
@@ -24,16 +25,24 @@ public class UI_Dead_Popup : UI_Popup
         
         GetButton((int)Buttons.TitleButton).gameObject.BindEvent(OnBackButton);
         
-        GetText((int)Texts.KillText).text = $"x {Managers.Game.SaveData.kill}";
-        GetText((int)Texts.TimeText).text = $"{Managers.Game.GameTime}";
-        GetText((int)Texts.MoneyText).text = $"{Managers.Game.GameTime}";
-        // SetInfo();
+        float timer = Managers.Game.GameTime;
+        int min = Mathf.FloorToInt(timer / 60);
+        int sec = Mathf.FloorToInt(timer % 60);
+        
+        // 결과 보기 및 정지
+        Managers.Game.ShowResult();
+        
+        GetText((int)Texts.KillText).text = $"x {Managers.Game.SaveData.Kill}";
+        GetText((int)Texts.TimeText).text = string.Format($"시간 : {min :D2} : {sec :D2}");
+        GetText((int)Texts.MoneyText).text = $"<sprite=16> {Managers.Game.SaveData.money}";
+        
         
         return true;
     }
 
     void OnBackButton()
     {
-        Debug.Log("back");
+        Managers.Game.SaveGame();
+        SceneManager.LoadScene("LoginScene");
     }
 }

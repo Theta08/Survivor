@@ -8,7 +8,7 @@ public class UI_TitlePopup : UI_Popup
     {
         StartButton,
         StateButton,
-        GachaButton,
+        // GachaButton,
     }
     public override bool Init()
     {
@@ -27,7 +27,7 @@ public class UI_TitlePopup : UI_Popup
         
         GetButton((int)Buttons.StartButton).gameObject.BindEvent(OnStartButton);
         GetButton((int)Buttons.StateButton).gameObject.BindEvent(OnItemButton);
-        GetButton((int)Buttons.GachaButton).gameObject.BindEvent(OnGachaButton);
+        // GetButton((int)Buttons.GachaButton).gameObject.BindEvent(OnGachaButton);
 
     }
 
@@ -52,11 +52,17 @@ public class UI_TitlePopup : UI_Popup
     {
         if (!Managers.Game.LoadGame())
         {
+            // 캐릭터 스텟
             Managers.Game.SaveData.Characters = 
                 Managers.Data.DictionaryToList(Managers.Data.CharacterDic);
         
+            // 업그레이드 
             Managers.Game.SaveData.CharacterUpgrade = 
                 Managers.Data.UpgradeData;
+            
+            // 캐릭터 해금
+            Managers.Game.SaveData.Characters =
+                Managers.Data.DictionaryToList(Managers.Data.CharacterDic);
             
             Managers.Game.SaveGame();
         }

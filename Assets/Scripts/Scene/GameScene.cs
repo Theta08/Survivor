@@ -30,8 +30,11 @@ public class GameScene : BaseScene
     private void Update()
     {
         Managers.Game.GameTime += Time.deltaTime;
-
-        if (Managers.Game.GameTime > Managers.Game.MaxGameTime)
+        
+        if (Managers.Game.GameTime >= Managers.Game.MaxGameTime)
+        {
             Managers.Game.GameTime = Managers.Game.MaxGameTime;
+            Managers.UI.ShowPopupUI<UI_Dead_Popup>();
+        }
     }
 }

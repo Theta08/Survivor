@@ -19,7 +19,7 @@ public class MonsterStat : Stat
       
         } 
     }
-    private void Start()
+    private void Awake()
     {
         Init();
     }

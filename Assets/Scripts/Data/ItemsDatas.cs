@@ -52,7 +52,7 @@ public class ItemsDatasLoad : ILoader<int, Item>
                 case "weapon":
                     item.itemType = Item.ItemType.Melee;
                     break;
-                case "gun":
+                case "range":
                     item.itemType = Item.ItemType.Range;
                     break;
                 case "glove":

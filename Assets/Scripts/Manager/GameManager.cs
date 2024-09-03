@@ -43,22 +43,32 @@ public class GameManager
     #region Exp
     public void GetExp()
     {
-        Managers.Game.SaveData.exp++;
-        Managers.Game.SaveData.kill++;
+        Managers.Game.SaveData.Exp++;
+        Managers.Game.SaveData.Kill++;
         
-        int exp = Managers.Game.SaveData.exp;
-        int level = Managers.Game.SaveData.level;
-        int nextExp = Managers.Game.SaveData.nextExp[level];
+        int exp = Managers.Game.SaveData.Exp;
+        int level = Managers.Game.SaveData.Level;
+        int nextExp = Managers.Game.SaveData.NextExp[level];
 
         if (exp == nextExp)
         {
-            Managers.Game.SaveData.level++;
-            Managers.Game.SaveData.exp = 0;
+            Managers.Game.SaveData.Level++;
+            Managers.Game.SaveData.Exp = 0;
 
             // 주석 풀어야함
             Managers.UI.ShowPopupUI<UI_Select_Item>();
         }
     }
+    #endregion
+
+    #region Dead -> Money
+
+    public void ShowResult()
+    {
+        Stop();
+        SaveData.money = SaveData.Kill * 1 + (int)GameTime;
+    }
+
     #endregion
     
     #region Timer Stop or reStart

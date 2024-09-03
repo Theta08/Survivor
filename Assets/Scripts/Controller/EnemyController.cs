@@ -9,8 +9,6 @@ public class EnemyController : BaseController
     [SerializeField]
     private Rigidbody2D target;
     private WaitForFixedUpdate _wait;
-    // 데이터메니저나 다른 스크립트로 빼야함
-    private RuntimeAnimatorController[] animCon = new RuntimeAnimatorController[4];
     
     // 물리기반이라 FixedUpdate를 씀
     private void FixedUpdate()
@@ -60,9 +58,9 @@ public class EnemyController : BaseController
         Stat = gameObject.GetOrAddComponent<MonsterStat>();
         
         // 빼야함
-        animCon[0] = Managers.Resource.Load<RuntimeAnimatorController>("Animations/Enemy/AcEnemy 2");
+        _animCon[0] = Managers.Resource.Load<RuntimeAnimatorController>("Animations/Enemy/AcEnemy 2");
         // 미완
-        _animator.runtimeAnimatorController = animCon[0];
+        _animator.runtimeAnimatorController = _animCon[0];
         return true;
     }
 
@@ -82,8 +80,7 @@ public class EnemyController : BaseController
             _rigidbody.simulated = false;
             _sprite.sortingOrder = 1;
             _animator.SetBool("Dead", true);
-
-            Managers.Game.SaveData.kill++;
+            
             Managers.Game.GetExp();
         }
 

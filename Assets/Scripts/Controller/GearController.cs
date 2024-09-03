@@ -51,11 +51,14 @@ public class GearController : MonoBehaviour
         {
             switch (weapon.id)
             {
-                case 0:
+                case 1:
                     weapon.speed = 150 + (150 * _rate);
                     break;
+                case 0:
+                    weapon.speed *= (1f - _rate);
+                    break;
                 default:
-                    weapon.speed = 0.9f * (1f - _rate);
+                    weapon.speed *= (1f - _rate);
                     break;
             }
         }

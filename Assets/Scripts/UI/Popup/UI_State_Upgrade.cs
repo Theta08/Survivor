@@ -8,7 +8,10 @@ public class UI_State_Upgrade : UI_Popup
     {
         BackButton,
     }
-
+    enum Texts
+    {
+        MoneyText,
+    }
     private GameObject _panel;
     public override bool Init()
     {
@@ -19,13 +22,19 @@ public class UI_State_Upgrade : UI_Popup
         
         return true;
     }
-    
+
+    public void Refresh()
+    {
+        GetText((int)Texts.MoneyText).text = $"<sprite=16>{Managers.Game.SaveData.money}";
+    }
     void SetInfo()
     {
         BindButton(typeof(Buttons));
+        BindText(typeof(Texts));
         
         // GetButton((int)Buttons.StartButton).gameObject.BindEvent(OnStartButton);
         GetButton((int)Buttons.BackButton).gameObject.BindEvent(OnBackButton);
+        GetText((int)Texts.MoneyText).text = $"<sprite=16>{Managers.Game.SaveData.money}";
     }
     
     void OnBackButton()

@@ -51,8 +51,8 @@ public class UI_HUD : UI_Scene //UI_Scene
     void Type()
     {
       
-        MaxValue = Managers.Game.SaveData.nextExp[Managers.Game.SaveData.level];
-        Value = Managers.Game.SaveData.exp;
+        MaxValue = Managers.Game.SaveData.NextExp[Managers.Game.SaveData.Level];
+        Value = Managers.Game.SaveData.Exp;
         
         SetHpRatio(Value / MaxValue);
 
@@ -61,7 +61,7 @@ public class UI_HUD : UI_Scene //UI_Scene
         int min = Mathf.FloorToInt(timer / 60);
         int sec = Mathf.FloorToInt(timer % 60);
         _text.text = string.Format($"{min :D2} : {sec :D2}");
-
+        
     }
     
     public void SetHpRatio(float ratio)

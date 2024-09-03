@@ -13669,6 +13669,7 @@ GameObject:
   - component: {fileID: 1215658897}
   - component: {fileID: 1215658898}
   - component: {fileID: 1215658896}
+  - component: {fileID: 1215658899}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -13797,8 +13798,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46de3368b5f91b14f99dc1a19bf5aa79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputVec: {x: 0, y: 0}
   Hands: []
+  Scanner: {fileID: 0}
 --- !u!114 &1215658897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13850,6 +13851,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1215658899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215658891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79a8e70a664bd540b934230337425fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nearestTarget: {fileID: 0}
 --- !u!1 &1261409823
 GameObject:
   m_ObjectHideFlags: 0
@@ -18472,6 +18486,10 @@ PrefabInstance:
     - target: {fileID: 2801527629614532497, guid: d7b7ecc5c35dfba4eabe47926e578e38, type: 3}
       propertyPath: m_Name
       value: UI_Dead
+      objectReference: {fileID: 0}
+    - target: {fileID: 2801527629614532497, guid: d7b7ecc5c35dfba4eabe47926e578e38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2801527629614532501, guid: d7b7ecc5c35dfba4eabe47926e578e38, type: 3}
       propertyPath: m_Pivot.x

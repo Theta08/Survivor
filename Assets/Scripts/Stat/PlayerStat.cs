@@ -6,7 +6,7 @@ public class PlayerStat : Stat
 {
     // public virtual int Atk { get { return _atk;} set { _atk = value; } }
     
-    void Start()
+    void Awake()
     {
         Init();
     }

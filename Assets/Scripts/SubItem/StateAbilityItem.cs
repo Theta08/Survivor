@@ -22,8 +22,10 @@ public class StateAbilityItem : UI_Base
     enum Texts
     {
         SliderText,
+        BuyText,
     }
-    
+
+    private int _buy;
     private TextMeshProUGUI _text;
     private SliderBar _sliderBar;
     
@@ -48,6 +50,7 @@ public class StateAbilityItem : UI_Base
         BindText(typeof(Texts));
         
         SetInfo();
+        Refresh();
         
         return true;
     }
@@ -57,7 +60,7 @@ public class StateAbilityItem : UI_Base
 
         GetButton((int)Buttons.Box).gameObject.BindEvent(OnClickEvent);
         
-        _text =GetText((int)Texts.SliderText);
+        _text = GetText((int)Texts.SliderText);
         _sliderBar = Get<SliderBar>((int)SliderInfo.SliderBar);
 
         StatSetting();
@@ -68,13 +71,24 @@ public class StateAbilityItem : UI_Base
         _sliderBar.Value = Value;
     }
 
+    void Refresh()
+    {
+        _buy = 10 + Value * 10;
+        GetText((int)Texts.BuyText).text = _buy.ToString();
+        transform.parent.parent.GetComponent<UI_State_Upgrade>().Refresh();
+    }
     void OnClickEvent()
     {
+        if (_buy > Managers.Game.SaveData.money)
+            return;
+        
+        Managers.Game.SaveData.money -= _buy;
+        
         if (Maxvalue > _sliderBar.Value)
         {
             _sliderBar.Value += 1;
-            _text.text = _sliderBar.Value.ToString();
-            
+            Value += (int)_sliderBar.Value;
+            _text.text = Value.ToString();
             switch (_userUpgradeStat)
             {
                 case Define.UserUpgradeStat.HPPanel:
@@ -90,7 +104,9 @@ public class StateAbilityItem : UI_Base
                     Managers.Game.SaveData.CharacterUpgrade.atkSpd += (int)_sliderBar.Value;
                     break;
             }
-            
+
+            Refresh();
+            Managers.Game.SaveGame();
         }
         else
             Debug.Log("Maxvalue");

@@ -39,9 +39,6 @@ public class UI_AbilityItem : UI_Base
         BindButton(typeof(Buttons));
         BindImage(typeof(Images));
         
-        // RefreshUI();
-        
-        
         GetButton((int)Buttons.Button).gameObject.BindEvent(OnButtonEvent);
         // gameObject.BindEvent(OnButtonEvent);
         return true;
@@ -56,6 +53,7 @@ public class UI_AbilityItem : UI_Base
         switch (_item.type)
         {
             case "weapon":
+            case "range":
                 if (_item.level == 0)
                 {
                     GameObject newWeapon = new GameObject {name = $"Weapon_{_item.id}l"};
@@ -75,8 +73,6 @@ public class UI_AbilityItem : UI_Base
                     _weapon = _item.WeaponController;
                     _weapon.LevelUp(nextDamage, nextCount);
                 }
-                break;
-            case "gun":
                 break;
             case "glove":
             case "shoe":

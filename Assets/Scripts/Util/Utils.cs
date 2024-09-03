@@ -58,6 +58,12 @@ public class Utils
    {
       Sprite[] sprites = Resources.LoadAll<Sprite>($"Sprites/{location}");
 
+      if (sprites.Length == 0)
+      {
+         Debug.Log($"no {location} name {sprtieName}");
+         return null;
+      }
+      
       foreach (Sprite sprite in sprites)
       {
          if (sprite.name == sprtieName)
@@ -66,7 +72,7 @@ public class Utils
          }
       }
       
-      Debug.Log($"no {location} name {sprtieName}");
+      
       return null;
    }
 }

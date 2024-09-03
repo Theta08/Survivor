@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class CharacterPanel : UI_Base
             return false;
 
         Bind<UI_Chacter_Box>(typeof(CharterBox));
-
+        
         RefreshUi();
         
         return true;

@@ -7,14 +7,23 @@ using UnityEngine.InputSystem;
 public class PlayerController : BaseController
 {
     private WeaponController _weaponController;
-    [SerializeField]
     private Vector2 _inputVec;
 
     public Hand[] Hands;
     public Vector2 InputVec { get { return _inputVec; } set { _inputVec = value; } }
-    
+    public Scanner Scanner;
     void Awake()
     {
+        Managers.Game.GetPlayer = this;
+        Stat = gameObject.GetOrAddComponent<PlayerStat>();
+        Scanner = GetComponent<Scanner>();
+        
+        // 빼야함
+        for (int i = 0; i < 4; i++)
+        {
+            _animCon[i] = Managers.Resource.Load<RuntimeAnimatorController>($"Animations/AcPlayer {i}");
+        }
+
         Init();
     }
     
@@ -42,32 +51,28 @@ public class PlayerController : BaseController
         if (base.Init() == false)
             return false;
         
-        // Init 적용 후 Stat.Init 적용
-        Stat = gameObject.GetOrAddComponent<PlayerStat>();
         _isLive = true;
         
         ObjectType = Define.ObjectType.Player;
-        Managers.Game.GetPlayer = this;
 
         Hands = GetComponentsInChildren<Hand>(true);
         
         // 기본공격 테스트
-        Item item = new Item();
+        Item item = Managers.Data.ItemDatasDic[0];
         GameObject newWeapon = new GameObject();
         
-        item.id = -1;
-        item.itemType = Item.ItemType.Range;
-        item.hand = "Weapon 3";
-        item.handSprite = Utils.FindSprite("Props", item.hand);
-        
         _weaponController = newWeapon.AddComponent<WeaponController>();
-        _weaponController.speed = Stat.AtkSpd;
         _weaponController.Init(item);
+        // 미완
+        _animator.runtimeAnimatorController = _animCon[Managers.Game.SelectId];
         return true;
     }
 
     void OnMove(InputValue value)
     {
+        if(!Managers.Game.IsLive)
+            return;
+        
         // normalized 사용중...
         _inputVec = value.Get<Vector2>();
     }
@@ -81,14 +86,12 @@ public class PlayerController : BaseController
 
         if (Stat.Hp <= 0)
         {
-            
             for (int i = 2; i < transform.childCount; i++)
-            {
                 transform.GetChild(i).gameObject.SetActive(false);
-            }
             
             _animator.SetBool("Dead", true);
-            Managers.Game.IsLive = false;
+            // popup 호출
+            Managers.UI.ShowPopupUI<UI_Dead_Popup>();
         }
     }
 }
