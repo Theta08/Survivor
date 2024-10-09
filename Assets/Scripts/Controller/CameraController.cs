@@ -6,7 +6,6 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    // private CinemachineVirtualCamera cinemachine;
 
     private Vector3 _cameraPosition = new Vector3(0, 0, -10);
     [SerializeField]
@@ -20,12 +19,12 @@ public class CameraController : MonoBehaviour
     private float _height;
     private float _width;
     
+    public Vector2 MapSize { get { return mapSize; } set { mapSize = value; } }
+    
     void Start()
     {
         _height = Camera.main.orthographicSize;
         _width = _height * Screen.width / Screen.height;
-        // cinemachine = GetComponent<CinemachineVirtualCamera>();
-        // Managers.Game.Camera = this;
     }
 
     private void FixedUpdate()

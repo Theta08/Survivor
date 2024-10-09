@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 안씀
 public class SpawningPool : MonoBehaviour
 {
     private int _monsterCount = 0;
@@ -22,8 +23,8 @@ public class SpawningPool : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_reserveCount + _monsterCount < _keepMonsterCount)
-            StartCoroutine("ReserveSpawn");
+        // if (_reserveCount + _monsterCount < _keepMonsterCount)
+        //     StartCoroutine("ReserveSpawn");
     }
     
     IEnumerator ReserveSpawn()

@@ -44,9 +44,6 @@ public class WeaponController : MonoBehaviour
             default:
                 break;
         }
-        // test
-        if(Input.GetButtonDown("Jump"))
-            LevelUp(20, 4);
     }
     
     public void LevelUp(float damage, int count)
@@ -141,8 +138,6 @@ public class WeaponController : MonoBehaviour
         go.transform.position = transform.position;
         // 회전
         go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        // _damage = Managers.Data.ItemDatasDic[1].damage;
-        // _count = Managers.Data.ItemDatasDic[1].count;
         go.GetComponent<Bullet>().Init(_damage, _count, dir); 
     }
     private void Fire()

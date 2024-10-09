@@ -43,12 +43,16 @@ public class UI_Select_Character : UI_Popup
 
     void OnStartButton()
     {
-        if(Managers.Game.SelectId != -1)
+        if (Managers.Game.SelectId != -1)
+        {
+            Managers.Sound.Play(Define.Sound.Effect, "Select");
             SceneManager.LoadScene("GameScene");
+        }
     }
     
     void OnBackButton()
     {
+        Managers.Sound.Play(Define.Sound.Effect, "Select");
         Managers.UI.ClosePopupUI(this);
         Managers.UI.ShowPopupUI<UI_TitlePopup>();
     }

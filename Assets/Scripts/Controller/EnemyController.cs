@@ -7,7 +7,7 @@ public class EnemyController : BaseController
 {
     
     [SerializeField]
-    private Rigidbody2D target;
+    private Rigidbody2D _target;
     private WaitForFixedUpdate _wait;
     
     // 물리기반이라 FixedUpdate를 씀
@@ -16,7 +16,7 @@ public class EnemyController : BaseController
         if (!_isLive || _animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             return;
         
-        Vector2 dirVec = target.position - _rigidbody.position;
+        Vector2 dirVec = _target.position - _rigidbody.position;
         Vector2 nextVec = dirVec.normalized * Stat.Spd * Time.fixedDeltaTime;
         
         _rigidbody.MovePosition(_rigidbody.position + nextVec);
@@ -29,7 +29,7 @@ public class EnemyController : BaseController
         if (!_isLive)
             return;
         
-        _sprite.flipX = target.position.x < _rigidbody.position.x;
+        _sprite.flipX = _target.position.x < _rigidbody.position.x;
         
         // if(3 < _testDestorytimer)
         //     Managers.Resource.Destroy(gameObject);
@@ -37,7 +37,7 @@ public class EnemyController : BaseController
 
     private void OnEnable()
     {
-        target = Managers.Game.GetPlayer.GetComponent<Rigidbody2D>();
+        _target = Managers.Game.GetPlayer.GetComponent<Rigidbody2D>();
         _isLive = true;
         _collider2D.enabled = true;
         _rigidbody.simulated = true;
@@ -54,7 +54,7 @@ public class EnemyController : BaseController
         ObjectType = Define.ObjectType.Monster;
 
         _wait = new WaitForFixedUpdate();
-        target = Managers.Game.GetPlayer.GetComponent<Rigidbody2D>();
+        _target = Managers.Game.GetPlayer.GetComponent<Rigidbody2D>();
         Stat = gameObject.GetOrAddComponent<MonsterStat>();
         
         // 빼야함
@@ -70,11 +70,13 @@ public class EnemyController : BaseController
             return;
 
         StartCoroutine("KnockBack");
+        Managers.Sound.Play(Define.Sound.Effect, "Hit0");
         Stat.Hp -= (int)other.GetComponent<Bullet>().Damage;
 
         if (Stat.Hp <= 0)
         {
             _isLive = false;
+            Managers.Sound.Play(Define.Sound.Effect, "Dead");
             // 비활성화
             _collider2D.enabled = false;
             _rigidbody.simulated = false;
@@ -90,7 +92,7 @@ public class EnemyController : BaseController
     {
         // 다음 하나의 물리 프레임 딜레이
         yield return _wait;
-        Vector3 playerPos = target.transform.position;
+        Vector3 playerPos = _target.transform.position;
         Vector3 dir = transform.position - playerPos;
         
         _rigidbody.AddForce(dir.normalized * 3, ForceMode2D.Impulse);

@@ -20,7 +20,6 @@ public class GameManager
     public Action<int> OnSpawnEvent;
     public GameData SaveData { get {return _gameData;} set { _gameData = value; } }
     public PlayerController GetPlayer{ get {return _player;} set { _player = value; } }
-    public bool IsLive { get { return _isLive;} set { _isLive = value; } }
     public float GameTime { get { return _gameTime;} set { _gameTime = value; } }
     public float MaxGameTime { get { return _maxGameTime;} set { _maxGameTime = value; } }
     
@@ -35,11 +34,25 @@ public class GameManager
     public delegate void SelectIdSocket(int id);
     public static event SelectIdSocket SelectIdEvent;
     
+    public delegate void SoundIdSocket(int id);
+    public static event SoundIdSocket SoundIdEvent;
+    
     public void Init()
     {
         if (SelectIdEvent != null) SelectIdEvent(SelectId);
     }
 
+    #region  Test
+
+    void Test()
+    {
+        SoundIdEvent?.Invoke(0);
+        
+    }
+    
+
+    #endregion
+    
     #region Exp
     public void GetExp()
     {
@@ -66,7 +79,7 @@ public class GameManager
     public void ShowResult()
     {
         Stop();
-        SaveData.money = SaveData.Kill * 1 + (int)GameTime;
+        SaveData.money += SaveData.Kill * 1 + (int)GameTime;
     }
 
     #endregion
@@ -75,13 +88,11 @@ public class GameManager
 
     public void Stop()
     {
-        _isLive = false;
         Time.timeScale = 0;
     }
 
     public void Resume()
     {
-        _isLive = true;
         Time.timeScale = 1;
     }
 

@@ -14,8 +14,8 @@ public class BaseScene : MonoBehaviour
 
     protected virtual bool Init()
     {
-        if (_init)
-            return false;
+        // if (_init)
+        //     return false;
 
         _init = true;
         

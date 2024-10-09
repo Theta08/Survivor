@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : BaseController
 {
+    CameraController _camera;
     private WeaponController _weaponController;
     private Vector2 _inputVec;
 
@@ -17,6 +18,10 @@ public class PlayerController : BaseController
         Managers.Game.GetPlayer = this;
         Stat = gameObject.GetOrAddComponent<PlayerStat>();
         Scanner = GetComponent<Scanner>();
+        
+        // 
+        if (Camera.main != null) 
+            _camera = Camera.main.gameObject.GetComponent<CameraController>();
         
         // 빼야함
         for (int i = 0; i < 4; i++)
@@ -34,6 +39,25 @@ public class PlayerController : BaseController
     
     private void FixedUpdate()
     {
+        if (Mathf.Abs(transform.position.x) > _camera.MapSize.x - 0.5)
+        {
+            if (transform.position.x < 0)
+                transform.position = new Vector2(-_camera.MapSize.x + 0.5f, transform.position.y);
+            else
+                transform.position = new Vector2(_camera.MapSize.x - 0.5f, transform.position.y);
+            
+            return;
+        }
+        else if (Mathf.Abs(transform.position.y) > _camera.MapSize.x - 0.5)
+        {
+            if (transform.position.y < 0)
+                transform.position = new Vector2(transform.position.x, -_camera.MapSize.x + 0.5f);
+            else
+                transform.position = new Vector2(transform.position.x, _camera.MapSize.x - 0.5f);
+            
+            return;
+        }
+        
         Vector2 nextVec = InputVec * Stat.Spd * Time.fixedDeltaTime;
         _rigidbody.MovePosition(_rigidbody.position + nextVec);
     }
@@ -51,10 +75,9 @@ public class PlayerController : BaseController
         if (base.Init() == false)
             return false;
         
+        // _isLive = true;
         _isLive = true;
-        
         ObjectType = Define.ObjectType.Player;
-
         Hands = GetComponentsInChildren<Hand>(true);
         
         // 기본공격 테스트
@@ -70,16 +93,15 @@ public class PlayerController : BaseController
 
     void OnMove(InputValue value)
     {
-        if(!Managers.Game.IsLive)
+        if(!_isLive)
             return;
-        
         // normalized 사용중...
         _inputVec = value.Get<Vector2>();
     }
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        if(!Managers.Game.IsLive)
+        if(!_isLive)
             return;
 
         Stat.Hp -= Time.deltaTime * other.gameObject.GetOrAddComponent<Stat>().Atk;

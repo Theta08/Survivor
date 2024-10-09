@@ -15,6 +15,9 @@ public class UI_TitlePopup : UI_Popup
         if (base.Init() == false)
             return false;
 
+        Managers.Sound.Clear();
+        Managers.Sound.Play(Define.Sound.Bgm, "BGM", 0.25f);
+        
         SetInfo();
         LoadDataCheack();
         
@@ -33,12 +36,14 @@ public class UI_TitlePopup : UI_Popup
 
     void OnStartButton()
     {
+        Managers.Sound.Play(Define.Sound.Effect, "Select");
         Managers.UI.ClosePopupUI(this);
         Managers.UI.ShowPopupUI<UI_Select_Character>();
     }
     
     void OnItemButton()
     {
+        Managers.Sound.Play(Define.Sound.Effect, "Select");
         Managers.UI.ClosePopupUI(this);
         Managers.UI.ShowPopupUI<UI_State_Upgrade>();
     }
@@ -52,7 +57,7 @@ public class UI_TitlePopup : UI_Popup
     {
         if (!Managers.Game.LoadGame())
         {
-            // 캐릭터 스텟
+            // 캐릭터 해금
             Managers.Game.SaveData.Characters = 
                 Managers.Data.DictionaryToList(Managers.Data.CharacterDic);
         
@@ -60,16 +65,9 @@ public class UI_TitlePopup : UI_Popup
             Managers.Game.SaveData.CharacterUpgrade = 
                 Managers.Data.UpgradeData;
             
-            // 캐릭터 해금
-            Managers.Game.SaveData.Characters =
-                Managers.Data.DictionaryToList(Managers.Data.CharacterDic);
-            
             Managers.Game.SaveGame();
         }
         else
-        {
             Managers.Game.LoadGame();
-        }
-        
     }
 }

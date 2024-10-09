@@ -43,6 +43,8 @@ public class UI_Dead_Popup : UI_Popup
     void OnBackButton()
     {
         Managers.Game.SaveGame();
+        Managers.Sound.Play(Define.Sound.Effect, "Select");
+        Managers.Sound.Clear();
         SceneManager.LoadScene("LoginScene");
     }
 }

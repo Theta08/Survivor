@@ -17,12 +17,14 @@ public class Managers : MonoBehaviour
     private InputManager _input = new InputManager();
     private PoolManager _pool = new PoolManager();
     private UIManager _uiManager = new UIManager();
+    private SoundManager _soundManager = new SoundManager();
     
     public static DataManager Data { get { Init(); return Instance._data; } }
     public static ResourceManager Resource { get { Init(); return Instance._resource; } }
     public static InputManager Input { get { Init(); return Instance._input; } }
     public static PoolManager Pool { get { Init(); return Instance._pool; } }
     public static UIManager UI { get { Init(); return Instance._uiManager; } }
+    public static SoundManager Sound { get { Init(); return Instance._soundManager; } }
     
     void Start()
     {
@@ -44,6 +46,7 @@ public class Managers : MonoBehaviour
             s_instance._data.Init();
             s_instance._pool.Init();
             s_instance._resource.Init();
+            s_instance._soundManager.Init();
             _gameManager.Init();
         }
     }

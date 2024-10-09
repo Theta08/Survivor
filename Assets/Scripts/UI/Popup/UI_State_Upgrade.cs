@@ -39,6 +39,7 @@ public class UI_State_Upgrade : UI_Popup
     
     void OnBackButton()
     {
+        Managers.Sound.Play(Define.Sound.Effect, "Select");
         Managers.UI.ClosePopupUI(this);
         Managers.UI.ShowPopupUI<UI_TitlePopup>();
     }
