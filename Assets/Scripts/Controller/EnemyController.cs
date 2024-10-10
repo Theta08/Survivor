@@ -57,19 +57,20 @@ public class EnemyController : BaseController
         _target = Managers.Game.GetPlayer.GetComponent<Rigidbody2D>();
         Stat = gameObject.GetOrAddComponent<MonsterStat>();
         
-        // 빼야함
-        _animCon[0] = Managers.Resource.Load<RuntimeAnimatorController>("Animations/Enemy/AcEnemy 2");
-        // 미완
-        _animator.runtimeAnimatorController = _animCon[0];
+        // 몬스터 애니메이션 타입 설정 및 분당 몹 변경
+        EnemyType();
+        
         return true;
     }
 
+    // 피격
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Bullet") || !_isLive)
             return;
 
         StartCoroutine("KnockBack");
+        
         Managers.Sound.Play(Define.Sound.Effect, "Hit0");
         Stat.Hp -= (int)other.GetComponent<Bullet>().Damage;
 
@@ -101,5 +102,28 @@ public class EnemyController : BaseController
     void Dead()
     {
         Managers.Game.Despawn(gameObject);
+    }
+
+    void EnemyType()
+    {
+        //
+        // 1. monsterData json연결 해야하나??
+        // 2. 4개 만들기
+        // 3. 분당 바꾸기
+        //
+        
+        int selectId = 0;
+        int min = Mathf.FloorToInt(Managers.Game.GameTime / 10f) + 1;
+        List<MonsterData> test = Managers.Data.MonsterDataList;
+        
+        Debug.Log($"{min % test.Count}");  
+        
+        for(int i = 0; i < test.Count; i++)
+            _animCon[i] = Managers.Resource.Load<RuntimeAnimatorController>($"Animations/Enemy/AcEnemy {test[i].id}");
+
+        if (min != 0)
+            selectId = min % test.Count;
+        
+        _animator.runtimeAnimatorController = _animCon[selectId];
     }
 }

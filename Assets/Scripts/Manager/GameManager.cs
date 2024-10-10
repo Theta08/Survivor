@@ -22,7 +22,6 @@ public class GameManager
     public PlayerController GetPlayer{ get {return _player;} set { _player = value; } }
     public float GameTime { get { return _gameTime;} set { _gameTime = value; } }
     public float MaxGameTime { get { return _maxGameTime;} set { _maxGameTime = value; } }
-    
     public int SelectId { get { return _selectId;}
         set
         {

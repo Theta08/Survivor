@@ -42,7 +42,6 @@ public class Spawner : MonoBehaviour
 
     IEnumerator ReserveSpawn()
     {
-        // 스폰 데이터 만들어야 함
         // int rag = Random.Range(65, 67);
         int rag = 65;
         char cRag = (char)rag;

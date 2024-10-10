@@ -15,6 +15,7 @@ public class BaseController : MonoBehaviour
     protected SpriteRenderer _sprite;
     protected Animator _animator;
     // 데이터메니저나 다른 스크립트로 빼야함
+    [SerializeField]
     protected RuntimeAnimatorController[] _animCon = new RuntimeAnimatorController[4];
     
     public Define.ObjectType ObjectType { get; protected set; } = Define.ObjectType.Unknown;

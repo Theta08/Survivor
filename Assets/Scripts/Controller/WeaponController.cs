@@ -85,11 +85,13 @@ public class WeaponController : MonoBehaviour
                 break;
 
         }
-        // Hand Set
+        
+        #region Hand Set
         Hand hand = Managers.Game.GetPlayer.Hands[(int)item.itemType];
         item.handSprite = Utils.FindSprite("Props", item.hand);
         hand.gameObject.SetActive(true);
         hand._sprite.sprite = item.handSprite;
+        #endregion
         
         // 특정함수를 자식들에게 방송
         Managers.Game.GetPlayer.

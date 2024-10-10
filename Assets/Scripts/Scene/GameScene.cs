@@ -36,10 +36,11 @@ public class GameScene : BaseScene
     private void Update()
     {
         Managers.Game.GameTime += Time.deltaTime;
-        
+        // 승리시 팝업 변경해야함
         if (Managers.Game.GameTime >= Managers.Game.MaxGameTime)
         {
             Managers.Game.GameTime = Managers.Game.MaxGameTime;
+            // 승리 팝업 변경 필요
             Managers.UI.ShowPopupUI<UI_Dead_Popup>();
         }
     }

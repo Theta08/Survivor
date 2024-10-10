@@ -15,6 +15,8 @@ public class DataManager
    public Dictionary<int, Item> ItemDatasDic { get; set; } = new Dictionary<int, Item>();
    public UpgradeData UpgradeData { get; set; } = new UpgradeData();
 
+   public List<MonsterData> MonsterDataList = new List<MonsterData>();
+
    public void Init()
    {
       CharacterDic = LoadJson<CharactersDataLoad, int, Character>("Characters").MakeDict();
@@ -22,6 +24,8 @@ public class DataManager
       CharacterStatsDic = LoadJson<CharacterData, int, CharacterStat>("Stat").MakeDict();
       ItemDatasDic = LoadJson<ItemsDatasLoad, int, Item>("Items").MakeDict();
       UpgradeData = LoadJson<UpgradeData>("UpgradeStat");
+
+      MonsterDataList = DictionaryToList(MonsterStatsDic);
    }
    
    Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
