@@ -21,6 +21,7 @@ public class UI_Select_Character : UI_Popup
             return false;
 
         Debug.Log("UI_Select_Character");
+        Debug.Log($"id = {Managers.Game.SelectId}");
         
         SetInfo();
         
@@ -37,8 +38,7 @@ public class UI_Select_Character : UI_Popup
         GetButton((int)Buttons.BackButton).gameObject.BindEvent(OnBackButton);
 
         Get<CharacterPanel>((int)Objects.CharacterPanel).GetOrAddComponent<CharacterPanel>();
-
-        // Managers.Game.SelectId = -1;
+        
     }
 
     void OnStartButton()
@@ -52,8 +52,16 @@ public class UI_Select_Character : UI_Popup
     
     void OnBackButton()
     {
+        // 델리게이트 이벤트 삭제
+        // 삭제x시 오브젝트가 파괴 되었는데도 이벤트가 있어 
+        // 다시 캐릭창 들어 왔을때 선택시 에러가 난다.
+        GameObject go = gameObject.transform.Find("InfoPanel").gameObject;
+        go.transform.Find("CharacterInfoImg").GetComponent<CharacterInfoImg>().DeleteEvent();
+        go.transform.Find("CharacterStatPanel").GetComponent<CharacterStatPanel>().DeleteEvent();
+        
         Managers.Sound.Play(Define.Sound.Effect, "Select");
         Managers.UI.ClosePopupUI(this);
         Managers.UI.ShowPopupUI<UI_TitlePopup>();
+        
     }
 }

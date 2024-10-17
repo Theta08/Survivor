@@ -107,10 +107,10 @@ public class EnemyController : BaseController
     void EnemyType()
     {
         //
+        // enemy 소환시 타입 바인딩 
         // 1. monsterData json연결 해야하나??
         // 2. 4개 만들기
-        // 3. 분당 바꾸기
-        //
+        // 3. 분 당 바꾸기
         
         int selectId = 0;
         int min = Mathf.FloorToInt(Managers.Game.GameTime / 10f) + 1;

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterInfoImg : UI_Base
 {
+    
     enum Images
     {
         Image,
@@ -16,8 +17,8 @@ public class CharacterInfoImg : UI_Base
             return false;
 
         BindImage(typeof(Images));
-        // RefreshUI();
-        GameManager.SelectIdEvent += SelectInfo;
+        RefreshUI();
+       
         return true;
     }
     
@@ -30,9 +31,13 @@ public class CharacterInfoImg : UI_Base
     
     void SelectInfo(int id)
     {
+        if (id == -1)
+            return;
+        
         string name = "Stand 0";
+        Debug.Log($"select id = {id}");
         GetImage((int)Images.Image).sprite = Utils.FindSprite($"Farmer {id}", $"{name}");
-        GameManager.SelectIdEvent -= SelectInfo;
+        // GameManager.SelectIdEvent -= SelectInfo;
         // Sprite[]sprites = Resources.LoadAll<Sprite>($"Sprites/Farmer {id}");
         //
         // foreach (Sprite sprite in sprites)
@@ -43,8 +48,10 @@ public class CharacterInfoImg : UI_Base
         //         break;
         //     }
         // }
-        // error 
-        // 다른 팝업 들어갔다가 다시 시도하면 오류 
-        // GameManager.SelectIdEvent -= SelectInfo;
+    }
+
+    public void DeleteEvent()
+    {
+        GameManager.SelectIdEvent -= SelectInfo;
     }
 }

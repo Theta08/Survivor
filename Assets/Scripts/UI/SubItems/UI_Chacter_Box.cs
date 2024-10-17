@@ -77,7 +77,6 @@ public class UI_Chacter_Box : UI_Base
             return;
         
         Managers.Game.SelectId = type;
-        
         // Debug.Log($"select Id {Managers.Game.SelectId}");
         // 특정함수를 자식들에게 방송
         // gameObject.

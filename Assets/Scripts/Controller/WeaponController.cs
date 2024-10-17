@@ -25,15 +25,20 @@ public class WeaponController : MonoBehaviour
         {
             case 0:
             case 2:
+            case 6:
                 _timer += Time.deltaTime;
 
                 if (_timer > speed)
                 {
                     _timer = 0;
-                    if(id == 0)
-                        Fire();
-                    else
+                    if(id == 0){}
+                        // Fire();
+                        // Double();
+                    else if (id == 2)
                         ScanFire();
+                    else
+                        Double();
+                    
                 }
                 break;
             case 1:
@@ -80,6 +85,7 @@ public class WeaponController : MonoBehaviour
                 Bacth();
                 break;
             case 2:
+            case 6:
                 speed = 0.5f;
                 // ScanFire();
                 break;
@@ -161,6 +167,26 @@ public class WeaponController : MonoBehaviour
         
         go.GetComponent<Bullet>().Init(_damage, _count, dir); 
         go.GetComponent<TimerDestory>().Init(1.5f);
+    }
+
+    // 양 옆 공격
+    private void Double()
+    {
+        GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 3");
+        GameObject go1 = Managers.Resource.Instantiate("Weapon/Bullet 3");
+        
+        go.transform.position = transform.position + Vector3.left;
+        go1.transform.position = transform.position + Vector3.right;
+        
+        // _damage = Managers.Game.GetPlayer.Stat.Atk;
+        
+        go.GetComponent<Bullet>().Init(_damage, _count, Vector3.left); 
+        go1.GetComponent<Bullet>().Init(_damage, _count, Vector3.right);
+        
+        go.GetComponent<TimerDestory>().Init(0.5f);
+        go1.GetComponent<TimerDestory>().Init(0.5f);
+        
+        
     }
     
 }

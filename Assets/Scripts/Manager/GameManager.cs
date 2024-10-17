@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager
 {
     // 플레이어 사망 확인
-    private bool _isLive = true;
+    // private bool _isLive = true;
     private int _selectId;
     private float _gameTime;
     private float _maxGameTime = 2 * 10f * 60;
@@ -25,6 +25,9 @@ public class GameManager
     public int SelectId { get { return _selectId;}
         set
         {
+            if (!Managers.Data.CharacterDic[value].isOn)
+                return;
+            
             SelectIdEvent?.Invoke(value);
             _selectId = value;
         } 

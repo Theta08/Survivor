@@ -19,7 +19,6 @@ public class CharacterStatPanel : UI_Base
             return false;
 
         BindText(typeof(Texts));
-        GameManager.SelectIdEvent -= SelectInfo;
         RefreshUI();
         
         return true;
@@ -37,6 +36,12 @@ public class CharacterStatPanel : UI_Base
     }
     void RefreshUI()
     {
+        GameManager.SelectIdEvent -= SelectInfo;
         GameManager.SelectIdEvent += SelectInfo;
+    }
+    
+    public void DeleteEvent()
+    {
+        GameManager.SelectIdEvent -= SelectInfo;
     }
 }

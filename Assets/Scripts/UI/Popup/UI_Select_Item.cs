@@ -21,6 +21,7 @@ public class UI_Select_Item : UI_Popup
         
         // 주석 풀어야함
         Managers.Game.Stop();
+        
         // 랜덤선택
         // 기본 평타는x
         int[] ran = new int[3];
@@ -30,7 +31,8 @@ public class UI_Select_Item : UI_Popup
         {
             ran[0] = Random.Range(0, count);
             ran[1] = Random.Range(0, count);
-            ran[2] = Random.Range(0, count);
+            // ran[2] = Random.Range(0, count);
+            ran[2] = 6;
             
             if(ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2])
                 break;

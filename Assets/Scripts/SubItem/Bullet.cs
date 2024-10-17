@@ -22,8 +22,8 @@ public class Bullet : MonoBehaviour
     // -1 is Infinity Per
     public void Init(float damage, int per, Vector3 dir)
     {
-        _damage = damage;
-        _per = per;
+        Damage = damage;
+        Per = per;
         if (Per > -1)
         {
             // 속력
