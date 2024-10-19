@@ -31,13 +31,14 @@ public class WeaponController : MonoBehaviour
                 if (_timer > speed)
                 {
                     _timer = 0;
-                    if(id == 0){}
-                        // Fire();
+                    if(id == 0)
+                    // {}
+                        Fire();
                         // Double();
                     else if (id == 2)
                         ScanFire();
-                    else
-                        Double();
+                    else if (id == 6)
+                        Circle();
                     
                 }
                 break;
@@ -86,7 +87,7 @@ public class WeaponController : MonoBehaviour
                 break;
             case 2:
             case 6:
-                speed = 0.5f;
+                speed = 1f;
                 // ScanFire();
                 break;
 
@@ -157,11 +158,11 @@ public class WeaponController : MonoBehaviour
         Vector3 dir = targetPos - transform.position;
         dir = dir.normalized;
         
-        GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 3");
+        GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 1");
         // 위치
         go.transform.position = transform.position;
         // 회전
-        go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        // go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         
         _damage = Managers.Game.GetPlayer.Stat.Atk;
         
@@ -169,23 +170,117 @@ public class WeaponController : MonoBehaviour
         go.GetComponent<TimerDestory>().Init(1.5f);
     }
 
-    // 양 옆 공격
-    private void Double()
+    private void Circle()
     {
-        GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 3");
-        GameObject go1 = Managers.Resource.Instantiate("Weapon/Bullet 3");
         
-        go.transform.position = transform.position + Vector3.left;
-        go1.transform.position = transform.position + Vector3.right;
+        for (int i = 0; i < _count; i++)
+        {
+            
+            GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 2");
+            // 위치
+            go.transform.position = transform.position;
+            // 원
+            Vector3 dirVec = new Vector3(Mathf.Cos(Mathf.PI * 2 * i / _count),
+            Mathf.Sin(Mathf.PI * 2 * i / _count), 0
+            );
+            
+            // 위치 조정
+            go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dirVec.normalized);
+            
+            // go.GetComponent<Bullet>().Init(_damage, _count, newDirection.normalized);
+            go.GetComponent<Bullet>().Init(_damage, _count, dirVec.normalized);
+            go.GetComponent<TimerDestory>().Init(0.5f);
+        }
+    }
+    
+    // Test 공격
+    private void Test()
+    {
+        // if (!Managers.Game.GetPlayer.Scanner.nearestTarget)
+        //     return;
+
+        // enemy
+        // Vector3 targetPos = Managers.Game.GetPlayer.Scanner.nearestTarget.position;
+        // Vector3 dir = targetPos - transform.position;
         
-        // _damage = Managers.Game.GetPlayer.Stat.Atk;
         
-        go.GetComponent<Bullet>().Init(_damage, _count, Vector3.left); 
-        go1.GetComponent<Bullet>().Init(_damage, _count, Vector3.right);
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 targetPos = Camera.main.ScreenToWorldPoint(mousePos + new Vector3(0, 0, 10));
+        Vector3 dir = targetPos - transform.position;
+        // Vector3 dir = new Vector3(1, 1, 0) - transform.position;
+        dir = dir.normalized;
         
-        go.GetComponent<TimerDestory>().Init(0.5f);
-        go1.GetComponent<TimerDestory>().Init(0.5f);
+        // GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 2");
+        // // 위치
+        // go.transform.position = transform.position;
+        // // 회전
+        // go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        // go.GetComponent<Bullet>().Init(_damage, _count, dir);
+
+        for (int i = 0; i < _count; i++)
+        {
+            
+            GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 3");
+            // 위치
+            go.transform.position = transform.position;
+            // go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+            
+            // float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(dir.y, dir.x);
+            Vector3 dirVec = new Vector3(Mathf.Cos(Mathf.PI * angle * i / _count),
+                Mathf.Sin(Mathf.PI * angle * i / _count), 0
+            );
+            
+            // 원
+            // Vector3 dirVec = new Vector3(Mathf.Cos(Mathf.PI * 2 * i / _count),
+            // Mathf.Sin(Mathf.PI * 2 * i / _count), 0
+            // );
+            
+            // 위치 조정
+            go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dirVec.normalized);
+            
+            // 마우스 커서 기준 각도
+            // if(i == 2) 
+            //     angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg * 15;
+            // else 
+            //      angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + i * 30;
+
+            // 각도 오프셋을 적용한 방향 벡터 계산
+            // float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + i * 45;
+            
+
+            // float x = Mathf.Cos(angle * Mathf.Deg2Rad);
+            // float y = Mathf.Sin(angle * Mathf.Deg2Rad);
+            
+            Vector3 newDirection = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
+            
+            
+            // go.GetComponent<Bullet>().Init(_damage, _count, newDirection.normalized);
+            go.GetComponent<Bullet>().Init(_damage, _count, dirVec.normalized);
+            go.GetComponent<TimerDestory>().Init(0.5f);
+        }
         
+        
+        // float zValue = Mathf.Atan2(y, z) * 180 / Mathf.PI;
+        // Vector3 rotVec = Vector3.foward * zValue
+        // transform.Rotate(rotVec);       
+     
+        
+        // GameObject go = Managers.Resource.Instantiate("Weapon/Bullet 2");
+        // GameObject go1 = Managers.Resource.Instantiate("Weapon/Bullet 2");
+        //
+        // go.transform.position = transform.position + Vector3.left;
+        // go1.transform.position = transform.position + Vector3.right;
+        //
+        // // Vector3 dir = go.transform.position - transform.position;
+        // // go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir.normalized);
+        // // _damage = Managers.Game.GetPlayer.Stat.Atk;
+        //
+        // go.GetComponent<Bullet>().Init(_damage, _count, Vector3.left); 
+        // go1.GetComponent<Bullet>().Init(_damage, _count, Vector3.right);
+        //
+        // go.GetComponent<TimerDestory>().Init(0.5f);
+        // go1.GetComponent<TimerDestory>().Init(0.5f);
         
     }
     

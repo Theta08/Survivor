@@ -14,7 +14,7 @@ public class GameData
     private int _level;
     private int _kill;
     private int _exp;
-    private int[] _nextExp = {2, 3, 3, 3, 3, 5, 7, 10, 13, 17, 20, 25, };
+    private int[] _nextExp = {2, 3, 3, 3, 3, 5, 7, 10, 13, 17, 20, 25, 30, 35, 40, 45, 50};
     // 임시
     // private int[] _nextExp = {3, 5, 7, 12, 15, 20};
     

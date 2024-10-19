@@ -40,7 +40,6 @@ public class UI_AbilityItem : UI_Base
         BindImage(typeof(Images));
         
         GetButton((int)Buttons.Button).gameObject.BindEvent(OnButtonEvent);
-        // gameObject.BindEvent(OnButtonEvent);
         return true;
     }
     
@@ -54,10 +53,11 @@ public class UI_AbilityItem : UI_Base
         {
             case "weapon":
             case "range":
-                if (_item.level == 0)
+                // id == 0 : 기본 무기 처음에 장착함
+                if (_item.level == 0 && _item.id != 0)
                 {
                     GameObject newWeapon = new GameObject {name = $"Weapon_{_item.id}l"};
-        
+                    
                     _weapon = newWeapon.AddComponent<WeaponController>();
                     _weapon.Init(_item);
                     _item.WeaponController = _weapon;
@@ -105,7 +105,8 @@ public class UI_AbilityItem : UI_Base
             _item.maxLevel = true;
             _item.level = _item.damages.Length;
         }
-        RefreshUI();   
+        else
+            RefreshUI();   
         
         //  주석 풀어야함
         Managers.Game.Resume();
@@ -122,7 +123,7 @@ public class UI_AbilityItem : UI_Base
     void RefreshUI()
     {
         if (_item.itemType != Item.ItemType.Heal)
-            GetText((int)Texts.LvText).text =$"Lv. {_item.level}";    
+            GetText((int)Texts.LvText).text =$"Lv. {_item.level + 1}";    
         else
             GetText((int)Texts.LvText).text =$"";
         

@@ -80,12 +80,14 @@ public class PlayerController : BaseController
         ObjectType = Define.ObjectType.Player;
         Hands = GetComponentsInChildren<Hand>(true);
         
-        // 기본공격 테스트
+        // 기본공격
         Item item = Managers.Data.ItemDatasDic[0];
         GameObject newWeapon = new GameObject();
         
         _weaponController = newWeapon.AddComponent<WeaponController>();
         _weaponController.Init(item);
+        item.WeaponController = _weaponController;
+        
         // 미완
         _animator.runtimeAnimatorController = _animCon[Managers.Game.SelectId];
         return true;

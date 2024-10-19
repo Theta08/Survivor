@@ -115,8 +115,7 @@ public class EnemyController : BaseController
         int selectId = 0;
         int min = Mathf.FloorToInt(Managers.Game.GameTime / 10f) + 1;
         List<MonsterData> test = Managers.Data.MonsterDataList;
-        
-        Debug.Log($"{min % test.Count}");  
+ 
         
         for(int i = 0; i < test.Count; i++)
             _animCon[i] = Managers.Resource.Load<RuntimeAnimatorController>($"Animations/Enemy/AcEnemy {test[i].id}");

@@ -20,8 +20,7 @@ public class UI_Select_Character : UI_Popup
         if (base.Init() == false)
             return false;
 
-        Debug.Log("UI_Select_Character");
-        Debug.Log($"id = {Managers.Game.SelectId}");
+        Managers.Game.SelectId = -1;
         
         SetInfo();
         

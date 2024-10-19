@@ -10,7 +10,7 @@ public class GameManager
     // private bool _isLive = true;
     private int _selectId;
     private float _gameTime;
-    private float _maxGameTime = 2 * 10f * 60;
+    private float _maxGameTime = 1 * 10f * 60f;
     
     private PlayerController _player;
     // private GameObject _player;
@@ -25,6 +25,12 @@ public class GameManager
     public int SelectId { get { return _selectId;}
         set
         {
+            if (value == -1)
+            {
+                _selectId = value;
+                return;
+            }
+            
             if (!Managers.Data.CharacterDic[value].isOn)
                 return;
             
@@ -35,26 +41,13 @@ public class GameManager
 
     public delegate void SelectIdSocket(int id);
     public static event SelectIdSocket SelectIdEvent;
-    
-    public delegate void SoundIdSocket(int id);
-    public static event SoundIdSocket SoundIdEvent;
+
     
     public void Init()
     {
-        if (SelectIdEvent != null) SelectIdEvent(SelectId);
+        if (SelectIdEvent != null) SelectIdEvent(-1);
     }
 
-    #region  Test
-
-    void Test()
-    {
-        SoundIdEvent?.Invoke(0);
-        
-    }
-    
-
-    #endregion
-    
     #region Exp
     public void GetExp()
     {
