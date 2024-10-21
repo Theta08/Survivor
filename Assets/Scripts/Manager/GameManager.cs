@@ -11,6 +11,7 @@ public class GameManager
     private int _selectId;
     private float _gameTime;
     private float _maxGameTime = 1 * 10f * 60f;
+    private float _getMoney = 0;
     
     private PlayerController _player;
     // private GameObject _player;
@@ -22,6 +23,7 @@ public class GameManager
     public PlayerController GetPlayer{ get {return _player;} set { _player = value; } }
     public float GameTime { get { return _gameTime;} set { _gameTime = value; } }
     public float MaxGameTime { get { return _maxGameTime;} set { _maxGameTime = value; } }
+    public float GetMoney { get { return _getMoney;} set { _getMoney = value; } }
     public int SelectId { get { return _selectId;}
         set
         {
@@ -74,6 +76,7 @@ public class GameManager
     public void ShowResult()
     {
         Stop();
+        GetMoney = SaveData.Kill * 1 + (int)GameTime;
         SaveData.money += SaveData.Kill * 1 + (int)GameTime;
     }
 

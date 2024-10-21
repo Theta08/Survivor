@@ -28,16 +28,15 @@ public class CharacterInfoImg : UI_Base
         GameManager.SelectIdEvent += SelectInfo;
     }
     
-    
     void SelectInfo(int id)
     {
         if (id == -1)
             return;
         
         string name = "Stand 0";
-        Debug.Log($"select id = {id}");
+        // 캐릭터 스프라이트 세팅
         GetImage((int)Images.Image).sprite = Utils.FindSprite($"Farmer {id}", $"{name}");
-        // GameManager.SelectIdEvent -= SelectInfo;
+   
         // Sprite[]sprites = Resources.LoadAll<Sprite>($"Sprites/Farmer {id}");
         //
         // foreach (Sprite sprite in sprites)

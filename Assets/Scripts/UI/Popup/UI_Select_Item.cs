@@ -32,7 +32,6 @@ public class UI_Select_Item : UI_Popup
             ran[0] = Random.Range(0, count);
             ran[1] = Random.Range(0, count);
             ran[2] = Random.Range(0, count);
-            // ran[2] = 6;
             
             if(ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2])
                 break;
@@ -55,14 +54,6 @@ public class UI_Select_Item : UI_Popup
             else
                 Get<UI_AbilityItem>(i).SetInfo(ranItem);
         }
-        
-        // enum 안쓰고 함
-        // Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_1)
-        //     .SetInfo(Managers.Data.ItemDatasDic[ran[0]]);
-        // Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_2)
-        //     .SetInfo(Managers.Data.ItemDatasDic[ran[1]]);
-        // Get<UI_AbilityItem>((int)AbilityItems.UI_Abilibty_item_3)
-        //     .SetInfo(Managers.Data.ItemDatasDic[ran[2]]);
         
         return true;
     }

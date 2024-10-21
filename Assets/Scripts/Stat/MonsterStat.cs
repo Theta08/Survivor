@@ -28,14 +28,15 @@ public class MonsterStat : Stat
         Init();
     }
 
-    void Init()
+    public void Init(int seledId = 0)
     {
-        MonsterData monster = Managers.Data.MonsterStatsDic[0];
+        MonsterData monster = Managers.Data.MonsterStatsDic[seledId];
         
         if (monster == null)
             return;
         
         Id = monster.id;
+        MaxHp = monster.hp;
         Hp = monster.hp;
         Spd = monster.spd;
         Atk = monster.atk;

@@ -44,6 +44,8 @@ public class EnemyController : BaseController
         _sprite.sortingOrder = 2;
         _animator.SetBool("Dead", false);
         // _stat.Hp = _stat.MaxHp;
+
+        EnemyType();
     }
 
     public override bool Init()
@@ -114,15 +116,16 @@ public class EnemyController : BaseController
         
         int selectId = 0;
         int min = Mathf.FloorToInt(Managers.Game.GameTime / 10f) + 1;
-        List<MonsterData> test = Managers.Data.MonsterDataList;
+        List<MonsterData> monsterDataList = Managers.Data.MonsterDataList;
  
         
-        for(int i = 0; i < test.Count; i++)
-            _animCon[i] = Managers.Resource.Load<RuntimeAnimatorController>($"Animations/Enemy/AcEnemy {test[i].id}");
+        for(int i = 0; i < monsterDataList.Count; i++)
+            _animCon[i] = Managers.Resource.Load<RuntimeAnimatorController>($"Animations/Enemy/AcEnemy {monsterDataList[i].id}");
 
         if (min != 0)
-            selectId = min % test.Count;
+            selectId = min % monsterDataList.Count;
         
         _animator.runtimeAnimatorController = _animCon[selectId];
+        gameObject.GetComponent<MonsterStat>().Init(selectId);
     }
 }

@@ -34,7 +34,7 @@ public class UI_Dead_Popup : UI_Popup
         
         GetText((int)Texts.KillText).text = $"x {Managers.Game.SaveData.Kill}";
         GetText((int)Texts.TimeText).text = string.Format($"시간 : {min :D2} : {sec :D2}");
-        GetText((int)Texts.MoneyText).text = $"<sprite=16> {Managers.Game.SaveData.money}";
+        GetText((int)Texts.MoneyText).text = $"<sprite=16> {Managers.Game.GetMoney}";
         
         
         return true;

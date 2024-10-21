@@ -57,7 +57,7 @@ public class UI_TitlePopup : UI_Popup
     {
         if (!Managers.Game.LoadGame())
         {
-            // 캐릭터 해금
+            // 캐릭터
             Managers.Game.SaveData.Characters = 
                 Managers.Data.DictionaryToList(Managers.Data.CharacterDic);
         

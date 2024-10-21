@@ -65,7 +65,6 @@ public class WeaponController : MonoBehaviour
     }
     public void Init(Item item)
     {
-        
         gameObject.name = "Weapon_" + item.id; // data.itemId;
         transform.parent = Managers.Game.GetPlayer.transform;
         transform.localPosition = Vector3.zero;
@@ -105,6 +104,7 @@ public class WeaponController : MonoBehaviour
             BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
+    // 무기
     private void Bacth()
     {
         

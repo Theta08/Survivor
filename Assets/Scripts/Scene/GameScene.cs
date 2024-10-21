@@ -7,7 +7,8 @@ public class GameScene : BaseScene
 {
     [SerializeField] 
     private int _spawnMonseter;
-
+    private bool _stop = false;
+    
     private void Awake()
     {
         // 카메라 커트롤 바이딩
@@ -37,11 +38,12 @@ public class GameScene : BaseScene
     {
         Managers.Game.GameTime += Time.deltaTime;
         // 승리시 팝업 변경해야함
-        if (Managers.Game.GameTime >= Managers.Game.MaxGameTime)
+        if (Managers.Game.GameTime >= Managers.Game.MaxGameTime && !_stop)
         {
             Managers.Game.GameTime = Managers.Game.MaxGameTime;
             // 승리 팝업 변경 필요
             Managers.UI.ShowPopupUI<UI_Dead_Popup>();
+            _stop = true;
         }
     }
 }
